@@ -134,7 +134,6 @@
             position: relative;
             width: 100%;
             height: auto;
-            min-height: 300px;
             overflow: hidden;
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -143,12 +142,16 @@
         .slider {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            height: 100%;
+            height: auto;
         }
 
         .slide {
             min-width: 100%;
-            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 0 32px 0;
             background-color: var(--bg-primary);
             color: var(--text-secondary);
             position: relative;
@@ -196,8 +199,9 @@
         .slide-content {
             line-height: 1.6;
             font-size: clamp(0.9rem, 2vw, 1rem);
-            padding: 0 40px;
             margin-bottom: 20px;
+            max-width: 600px;
+            text-align: center;
         }
 
         .assignment-link {
@@ -223,7 +227,7 @@
         .assignment-container {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            width: 100%;
         }
 
         @media (max-width: 900px) {
