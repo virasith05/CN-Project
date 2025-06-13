@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CN Assignment Submission</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #7289da;
+            --border-color: #2d2d2d;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+        }
+
+        .team-members {
+            background-color: var(--bg-primary);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .team-members h2 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            text-align: center;
+        }
+
+        .team-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+            margin-top: 28px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .team-row {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 28px;
+        }
+
+        .team-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .team-card {
+            display: flex;
+            align-items: center;
+            background: #181a20;
+            border-radius: 16px;
+            padding: 32px 48px;
+            min-width: 320px;
+            min-height: 110px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+            gap: 24px;
+        }
+
+        .avatar {
+            background: #7289da;
+            color: #fff;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7em;
+        }
+
+        .member-name {
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.5px;
+            font-size: 1.25em;
+            margin-bottom: 6px;
+        }
+
+        .member-roll {
+            color: #b3b3b3;
+            font-size: 1.08em;
+        }
+
+        .assignments {
+            margin-top: 40px;
+        }
+
+        .assignments h2 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 300px;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        .slide {
+            min-width: 100%;
+            padding: 25px;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 24px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .nav-arrow:hover {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev-arrow {
+            left: 10px;
+        }
+
+        .next-arrow {
+            right: 10px;
+        }
+
+        .slide h3 {
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            text-align: center;
+        }
+
+        .slide-content {
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            padding: 0 40px;
+            margin-bottom: 20px;
+        }
+
+        .assignment-link {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            opacity: 0.9;
+            text-align: center;
+            width: 200px;
+        }
+
+        .assignment-link:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(114, 137, 218, 0.3);
+        }
+
+        .assignment-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .team-list {
+                max-width: 100%;
+                gap: 18px;
+            }
+            .team-row {
+                gap: 18px;
+            }
+            .team-card {
+                min-width: 220px;
+                padding: 20px 16px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .team-row {
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+            }
+            .team-card {
+                min-width: 180px;
+                padding: 16px 8px;
+            }
+            .avatar {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CN Assignment Submission</h1>
+        
+        <div class="team-members">
+            <h2>Team Members</h2>
+            <div class="team-list">
+                <div class="team-row">
+                    <div class="team-card">
+                        <div class="avatar">1</div>
+                        <div>
+                            <div class="member-name">HARI BABU HASINI</div>
+                            <div class="member-roll">AM.EN.U4ECE22122</div>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">2</div>
+                        <div>
+                            <div class="member-name">HARSHITHA N</div>
+                            <div class="member-roll">AM.EN.U4ECE22123</div>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">3</div>
+                        <div>
+                            <div class="member-name">TEENA S</div>
+                            <div class="member-roll">AM.EN.U4ECE22144</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-row">
+                    <div class="team-card">
+                        <div class="avatar">4</div>
+                        <div>
+                            <div class="member-name">MADDU SIRI VARSHINI</div>
+                            <div class="member-roll">AM.EN.U4ECE22150</div>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="avatar">5</div>
+                        <div>
+                            <div class="member-name">KANIMOZHI HARSHINI M</div>
+                            <div class="member-roll">AM.EN.U4ECE22157</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="assignments">
+            <h2>Assignments</h2>
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide">
+                        <div class="nav-arrow prev-arrow" onclick="prevSlide()">❮</div>
+                        <h3>Assignment 1</h3>
+                        <div class="slide-content">
+                            <p>Create all the topologies discussed in class in Cisco Packet Tracer (CPT).</p>
+                        </div>
+                        <div class="assignment-container">
+                            <a href="ASS-1.html" class="assignment-link">Go to Assignment 1</a>
+                        </div>
+                        <div class="nav-arrow next-arrow" onclick="nextSlide()">❯</div>
+                    </div>
+                    <div class="slide">
+                        <div class="nav-arrow prev-arrow" onclick="prevSlide()">❮</div>
+                        <h3>Assignment 2</h3>
+                        <div class="slide-content">
+                            <p>Create 3 LAN networks connected via a single Router (CPT). Choose appropriate router, connection and configure it. Each LAN network is configured via Tree, Star and Ring topologies respectively.
+                            <br> 
+                            The IP addresses  for the implementation of topologies should be chosen based on the 5 digits of  your Roll No.
+                            <br>
+                            Ex: U4ECE220XX      for A batch 
+                            <br>
+                            U4ECE221XX      for B batch
+                            <br>
+                            Ex IP address for Roll no 12 (for A and B batch) is:220.12.x.x for A batch and 221.12.x.x for B batch. You may take the subsequent IP addresses based on the mentioned roll number IP.</p>
+                        </div>
+                        <div class="assignment-container">
+                            <a href="ASS-2.html" class="assignment-link">Go to Assignment 2</a>
+                        </div>
+                        <div class="nav-arrow next-arrow" onclick="nextSlide()">❯</div>
+                    </div>
+                    <div class="slide">
+                        <div class="nav-arrow prev-arrow" onclick="prevSlide()">❮</div>
+                        <h3>Assignment 3</h3>
+                        <div class="slide-content">
+                            <p>Hotel Management Network Design</p>
+                        </div>
+                        <div class="assignment-container">
+                            <a href="ASS-3.html" class="assignment-link">Go to Assignment 3</a>
+                        </div>
+                        <div class="nav-arrow next-arrow" onclick="nextSlide()">❯</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slider = document.querySelector('.slider');
+        const totalSlides = document.querySelectorAll('.slide').length;
+
+        function updateSlider() {
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+
+        // Initialize slider
+        updateSlider();
+    </script>
+</body>
+</html> 
